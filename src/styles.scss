@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&display=swap');
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css";
+@import "../node_modules/line-awesome/dist/line-awesome/css/line-awesome.min.css";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.scss";
+
+html,
+body {
+  height: 100%;
+  background-color: var(--app-bg);
+}
+
+body {
+  margin: 0;
+  font-family: 'IBM Plex Sans', sans-serif !important;
+}
+
+* {
+  font-size: 14px;
+}
+

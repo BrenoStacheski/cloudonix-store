@@ -1,0 +1,188 @@
+#container::ng-deep {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .background-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+  }
+
+  .card-login {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+  }
+
+  form {
+    .form-control {
+      width: 100%;
+      border-radius: 4px;
+      height: 45px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      height: 45px;
+      font-size: 16px;
+    }
+  }
+
+
+  .recover-label {
+    text-align: center;
+  }
+
+  .fv-row {
+    position: relative;
+    margin-bottom: 1rem;
+    width: 100%;
+
+    .eye-button {
+      position: absolute;
+      right: 10px;
+      top: 58%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    ::ng-deep.mat-mdc-form-field-error {
+      position: absolute;
+      bottom: 0;
+      font-size: 0.875rem;
+      transform: translateY(100%);
+    }
+  }
+
+  .forgot-pwd {
+    text-decoration-line: underline !important;
+    color: var(--text-dark);
+    cursor: pointer;
+  }
+
+  ::placeholder {
+    color: var(--kt-gray-800);
+  }
+
+  .position {
+    padding: 5rem;
+  }
+
+  .bottom {
+    margin-bottom: 2.5rem;
+  }
+
+  .card-login {
+    display: flex;
+    width: 30vw;
+    height: 50vh;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      height: 71%;
+    }
+  }
+
+  .card-login {
+    .form-label {
+      font-weight: 600;
+    }
+
+    .form-control {
+      height: 45px;
+      border-radius: 4px;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      height: 45px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+  }
+
+  span[inlineSVG] {
+    max-width: 200px;
+    width: 100%;
+    display: block;
+  }
+
+  .content-info {
+    .image-info {
+      display: flex;
+      align-content: center;
+      align-items: center;
+      height: 100%;
+
+      img {
+        width: 60%;
+      }
+    }
+  }
+
+  .social-networks {
+    position: absolute;
+    bottom: 50px;
+    right: 30px;
+
+    span {
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    a {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    i {
+      border-radius: 10px;
+      color: #4faaff;
+      font-size: 2.3rem;
+      padding: 8px 6px 6px 6px;
+    }
+
+    i:hover {
+      background-color: #82d0fd;
+      color: #FFFFFF;
+    }
+  }
+
+}
+
+.image {
+  object-fit: contain;
+  cursor: default;
+}
+
+.images-container {
+  height: 15dvh;
+  max-height: 15dvh;
+  width: 15dvw;
+  max-width: 15dvw;
+}
+
+::ng-deep.cdk-text-field-autofill-monitored:not(:-webkit-autofill) {
+  margin-left: 0 !important;
+}
