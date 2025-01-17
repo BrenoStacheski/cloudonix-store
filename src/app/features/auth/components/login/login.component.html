@@ -1,0 +1,50 @@
+<section class="d-flex flex-column flex-root vh-100" id="container">
+  <div class="content d-flex flex-column justify-content-center align-items-center w-100 h-100 background-image"
+    [style.backgroundImage]="'url(' + loginBackground + ')'">
+    <div class="card-login bg-body rounded shadow w-md-400px p-4">
+      <div class="d-flex justify-content-center mb-5">
+        <img [src]="logoLogin" alt="Logo" class="mw-100 w-150px w-lg-200px">
+      </div>
+      <form [formGroup]="loginForm" class="d-flex justify-content-center w-100">
+        <div class="mb-3">
+          <label class="form-label">Authorization Key:</label>
+          <input type="text" formControlName="authToken" class="form-control w-100"
+            placeholder="Enter your authorization key">
+        </div>
+        <div class="d-grid">
+          <button (click)="signIn()" type="submit" class="btn btn-primary">Sign In</button>
+        </div>
+        <div class="text-color text-center mt-3">v {{cloudonixVersion}}</div>
+      </form>
+    </div>
+  </div>
+  <div class="content-info d-flex flex-lg-row-fluid d-none d-lg-flex">
+    <div class="d-flex flex-column pb-0 pb-lg-10 p-10 w-100">
+      <div class="social-networks">
+        <span>
+          <a href="https://www.facebook.com/p/Cloudonix-100057359802905/" target="blank">
+            <i class="lab la-facebook"></i>
+          </a>
+        </span>
+
+        <span>
+          <a href="https://www.youtube.com/channel/UC4UwvPpIb_HB8jOOqeEW4kg" target="blank">
+            <i class="lab la-youtube"></i>
+          </a>
+        </span>
+
+        <span>
+          <a href="https://www.linkedin.com/company/cloudonix-io/" target="blank">
+            <i class="lab la-linkedin"></i>
+          </a>
+        </span>
+
+        <span>
+          <a href="https://www.instagram.com/cloudonix_io/" target="blank">
+            <i class="lab la-instagram"></i>
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
