@@ -7,6 +7,11 @@ const routes: Routes = [
     path: STRING_EMPTY,
     loadChildren: () =>
       import('./features/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: STRING_EMPTY,
+    loadChildren: () =>
+      import('./features/products/products.module').then((m) => m.ProductsModule),
   }
 ]
 

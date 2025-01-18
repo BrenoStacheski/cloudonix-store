@@ -1,0 +1,110 @@
+<mat-card>
+  <div class="d-flex justify-content-between mb-3">
+    <h2 class="mb-3">Products</h2>
+
+    <button class="btn btn-primary btn-sm" (click)="newProduct()">
+      New product
+    </button>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="table-container hide-scrollbar">
+        <section class="mat-table p-0" tabIndex="0">
+          <table mat-table [dataSource]="products" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> ID </th>
+              <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="sku">
+              <th mat-header-cell *matHeaderCellDef> SKU </th>
+              <td mat-cell *matCellDef="let element"> {{ element.sku }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cost">
+              <th mat-header-cell *matHeaderCellDef> Price </th>
+              <td mat-cell *matCellDef="let element">
+                <span>{{ formatPrice(element.cost) }}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="action-buttons d-flex justify-content-end align-items-center">
+                  <mat-icon (click)="editProduct(element)" matTooltip="Edit" class="action-icon me-2" aria-label="Edit">
+                    edit
+                  </mat-icon>
+                  <mat-icon (click)="openDeletionDialog(element)" matTooltip="Delete" class="action-icon"
+                    aria-label="Delete">
+                    delete
+                  </mat-icon>
+                </div>
+              </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr [style.cursor]="'pointer'" mat-row *matRowDef="let row; columns: displayedColumns;"
+              (click)="showProductDetails(row)"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="2"> No data available </td>
+            </tr>
+          </table>
+        </section>
+      </div>
+    </div>
+
+    @if (selectedProduct && !createProduct) {
+    <div class="col-md-6">
+      <div class="product-details">
+        <label class="product-label">Description:</label>
+        <p class="product-text">{{ selectedProduct.description }}</p>
+
+        <label class="product-label">Type:</label>
+        <p class="product-text">{{ selectedProduct.profile.type }}</p>
+      </div>
+    </div>
+    }
+
+    @if (createProduct) {
+    <div class="col-md-6">
+      <form [formGroup]="productForm">
+        <div class="row mb-2">
+          <div class="col-md-4">
+            <label class="form-label">Product name:</label>
+            <input type="text" formControlName="name" class="form-control w-100" placeholder="Enter product name" />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">SKU:</label>
+            <input type="text" formControlName="sku" class="form-control w-100" placeholder="Enter product SKU" />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Price:</label>
+            <input type="text" formControlName="cost" class="form-control w-100" placeholder="Enter product price"
+              currencyMask [options]="dollarCurrencyFormat" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label">Description:</label>
+            <textarea type="text" formControlName="description" class="form-control w-100"
+              placeholder="Enter product description">
+            </textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    }
+  </div>
+</mat-card>
