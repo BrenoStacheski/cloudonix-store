@@ -42,51 +42,6 @@
     }
   }
 
-
-  .recover-label {
-    text-align: center;
-  }
-
-  .fv-row {
-    position: relative;
-    margin-bottom: 1rem;
-    width: 100%;
-
-    .eye-button {
-      position: absolute;
-      right: 10px;
-      top: 58%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 1.5rem;
-    }
-
-    ::ng-deep.mat-mdc-form-field-error {
-      position: absolute;
-      bottom: 0;
-      font-size: 0.875rem;
-      transform: translateY(100%);
-    }
-  }
-
-  .forgot-pwd {
-    text-decoration-line: underline !important;
-    color: var(--text-dark);
-    cursor: pointer;
-  }
-
-  ::placeholder {
-    color: var(--kt-gray-800);
-  }
-
-  .position {
-    padding: 5rem;
-  }
-
-  .bottom {
-    margin-bottom: 2.5rem;
-  }
-
   .card-login {
     display: flex;
     width: 30vw;
@@ -168,12 +123,6 @@
       color: #FFFFFF;
     }
   }
-
-}
-
-.image {
-  object-fit: contain;
-  cursor: default;
 }
 
 .images-container {
@@ -181,8 +130,4 @@
   max-height: 15dvh;
   width: 15dvw;
   max-width: 15dvw;
-}
-
-::ng-deep.cdk-text-field-autofill-monitored:not(:-webkit-autofill) {
-  margin-left: 0 !important;
 }

@@ -12,7 +12,7 @@
             placeholder="Enter your authorization key">
         </div>
         <div class="d-grid">
-          <button (click)="signIn()" type="submit" class="btn btn-primary">Sign In</button>
+          <button [disabled]="isLoading" (click)="signIn()" type="submit" class="btn btn-primary">Sign In</button>
         </div>
         <div class="text-color text-center mt-3">v {{cloudonixVersion}}</div>
       </form>
