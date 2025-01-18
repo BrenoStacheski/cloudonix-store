@@ -1,0 +1,18 @@
+:host {
+  nav {
+    top: 0;
+    z-index: 10;
+  }
+
+  .navbar-brand {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 80px;
+  }
+
+  .nav-bg {
+    height: 6%;
+    background-color: #82d0fd;
+  }
+}
