@@ -1,0 +1,18 @@
+@if (data.product) {
+<section class="delete-dialog">
+  <h2 class="delete-dialog-title">
+    Are you sure you want to delete the product <span class="product-name">{{ data.product.name }}</span>?
+  </h2>
+
+  <div class="delete-dialog-actions">
+    <button class="btn cancel-btn" (click)="cancelExclusion()">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button class="btn submit-btn" (click)="deleteProduct()">
+      <mat-icon>check</mat-icon>
+      Submit
+    </button>
+  </div>
+</section>
+}

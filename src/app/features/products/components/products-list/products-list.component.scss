@@ -1,0 +1,68 @@
+mat-card {
+  height: 94%;
+  padding: 1%;
+}
+
+button {
+  height: 60%;
+}
+
+.table-container {
+  position: relative;
+  min-height: 40vh;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.product-details {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.product-label {
+  font-weight: bold;
+  color: #555;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.product-text {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.action-icon {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #82d0fd;
+  transition: color 0.3s ease;
+}
+
+.action-icon:hover {
+  color: #4faaff;
+}
