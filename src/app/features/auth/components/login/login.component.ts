@@ -70,7 +70,10 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         TokenMethodsUtils.saveToken(this.loginForm.value.authToken);
         if (TokenMethodsUtils.getToken())
-          this.router.navigate(['/products']);
+          setTimeout(() => {
+            this.isLoading = false;
+            this.router.navigate(['/products']);
+          }, 2000);
       },
       error: () => {
         const options: SweetAlertOptions = {
@@ -87,10 +90,10 @@ export class LoginComponent implements OnInit {
           timerProgressBar: true,
         };
         Swal.fire(options);
+        this.isLoading = false;
       }
     })
       .add(() => {
-        this.isLoading = false;
         this.changeDetector.detectChanges();
       })
   }

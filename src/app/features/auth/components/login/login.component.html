@@ -1,7 +1,8 @@
 <section class="d-flex flex-column flex-root vh-100" id="container">
   <div class="content d-flex flex-column justify-content-center align-items-center w-100 h-100 background-image"
     [style.backgroundImage]="'url(' + loginBackground + ')'">
-    <div class="card-login bg-body rounded shadow w-md-400px p-4">
+    <div class="card-login bg-body rounded shadow w-md-400px p-4 d-flex justify-content-center align-items-center">
+      @if (!isLoading) {
       <div class="d-flex justify-content-center">
         <img [src]="logoLogin" alt="Logo" class="mw-100 w-150px w-lg-200px">
       </div>
@@ -19,6 +20,9 @@
         </div>
         <div class="text-color text-center mt-3">v {{cloudonixVersion}}</div>
       </form>
+      } @else {
+      <mat-spinner [color]="'primary'" [mode]="'indeterminate'" [value]="'25'"></mat-spinner>
+      }
     </div>
   </div>
   <div class="content-info d-flex flex-lg-row-fluid d-none d-lg-flex">
