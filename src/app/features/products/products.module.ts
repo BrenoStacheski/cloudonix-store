@@ -9,14 +9,17 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatDividerModule } from '@angular/material/divider';
 import { DeleteProductComponent } from './components/delete-product/delete-product.component';
 import { NgxMaskModule } from "ngx-mask";
 import { CurrencyMaskModule } from "ng2-currency-mask";
+import { ProductProfileEditorComponent } from './web-components/product-profile-editor/product-profile-editor.component';
 
 @NgModule({
   declarations: [
     ProductsListComponent,
     DeleteProductComponent,
+    ProductProfileEditorComponent,
   ],
   imports: [
     ProductsRoutingModule,
@@ -30,7 +33,8 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
     MatIconModule,
     MatTooltipModule,
     NgxMaskModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    MatDividerModule
   ]
 })
 export class ProductsModule { }

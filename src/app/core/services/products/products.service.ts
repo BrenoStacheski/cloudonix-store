@@ -18,11 +18,11 @@ export class ProductsService {
   }
 
   createProduct(productDto: ProductsModel): Observable<ProductsModel> {
-    return this.http.patch<ProductsModel>(`${this.API_URL}/items`, productDto);
+    return this.http.post<ProductsModel>(`${this.API_URL}/items`, productDto);
   }
 
-  updateProduct(productId: number, productDto: ProductsModel): Observable<ProductsModel> {
-    return this.http.patch<ProductsModel>(`${this.API_URL}/items/${productId}`, productDto);
+  updateProduct(productId: number, productProperty: Object): Observable<ProductsModel> {
+    return this.http.patch<ProductsModel>(`${this.API_URL}/items/${productId}`, productProperty);
   }
 
   deleteProduct(productId: number): Observable<null> {
