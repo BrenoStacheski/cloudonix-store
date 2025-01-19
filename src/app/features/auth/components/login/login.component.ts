@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   initLoginForm(): void {
     this.loginForm = this.formBuilder.group({
-      authToken: [null],
+      authToken: [null, Validators.required],
     })
   }
 
@@ -48,6 +48,23 @@ export class LoginComponent implements OnInit {
   }
 
   signIn(): void {
+    if (!this.loginForm.value.authToken) {
+      const options: SweetAlertOptions = {
+        html: `
+            <span>
+              <p class="swal-expirated-token">
+                Please, fill required fields.
+              </p>
+            </span>
+          `,
+        toast: false,
+        position: 'center',
+        showConfirmButton: true,
+        timerProgressBar: true,
+      };
+      Swal.fire(options);
+      return;
+    }
     this.isLoading = true;
     this.authService.signInWithAuthorizationKey(this.loginForm.value.authToken).subscribe({
       next: (res) => {
@@ -58,7 +75,7 @@ export class LoginComponent implements OnInit {
       error: () => {
         const options: SweetAlertOptions = {
           html: `
-              <span style="display: flex; height: 60px; align-items: center; align-content: center;">
+              <span>
                 <p class="swal-expirated-token">
                   It was not possible to sign in due to an error with the server, please try again later.
                 </p>

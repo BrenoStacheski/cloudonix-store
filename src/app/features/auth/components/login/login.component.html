@@ -7,12 +7,15 @@
       </div>
       <form [formGroup]="loginForm" class="d-flex justify-content-center w-100">
         <div class="mb-3">
-          <label class="form-label">Authorization Key:</label>
-          <input type="text" formControlName="authToken" class="form-control w-100"
+          <label class="form-label">
+            Authorization Key:<span class="text-danger"> *</span>
+          </label>
+          <input required type="text" formControlName="authToken" class="form-control w-100"
             placeholder="Enter your authorization key">
         </div>
         <div class="d-grid">
-          <button [disabled]="isLoading" (click)="signIn()" type="submit" class="btn btn-primary">Sign In</button>
+          <button [disabled]="isLoading || loginForm.invalid" (click)="signIn()" type="submit"
+            class="btn btn-primary">Sign In</button>
         </div>
         <div class="text-color text-center mt-3">v {{cloudonixVersion}}</div>
       </form>
