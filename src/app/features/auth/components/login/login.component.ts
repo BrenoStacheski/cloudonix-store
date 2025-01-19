@@ -47,16 +47,10 @@ export class LoginComponent implements OnInit {
     this.logoLogin = LoginComponent.LOGO_IMAGE;
   }
 
-  storeProducts(products: ProductsModel[]): void {
-    const storeListOfProducts = JSON.stringify(products);
-    localStorage.setItem('@products', storeListOfProducts);
-  }
-
   signIn(): void {
     this.isLoading = true;
     this.authService.signInWithAuthorizationKey(this.loginForm.value.authToken).subscribe({
       next: (res) => {
-        this.storeProducts(res);
         TokenMethodsUtils.saveToken(this.loginForm.value.authToken);
         if (TokenMethodsUtils.getToken())
           this.router.navigate(['/products']);

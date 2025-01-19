@@ -5,6 +5,7 @@ import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeleteProductComponent } from '../delete-product/delete-product.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Product } from '../../web-components/product';
 
 @Component({
   selector: 'app-products-list',
@@ -12,6 +13,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrl: './products-list.component.scss'
 })
 export class ProductsListComponent implements OnInit {
+  product: Product = {
+    profile: {
+      type: 'furniture',
+      available: true,
+      backlog: null,
+    },
+  };
+
   dollarCurrencyFormat: Object = {
     prefix: 'U$',
     thousands: '.',
@@ -22,8 +31,9 @@ export class ProductsListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'sku', 'name', 'cost', 'actions'];
 
   productForm!: FormGroup;
-  selectedProduct!: ProductsModel;
-  createProduct: boolean = false;
+  selectedProduct!: ProductsModel | null;
+  isLoading: boolean = false;
+  isUpdating: boolean = false;
 
   constructor(
     private productsService: ProductsService,
@@ -34,7 +44,7 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initProductForm();
-    this.fetchProductsFromStorage();
+    this.fetchProducts();
   }
 
   initProductForm(): void {
@@ -47,22 +57,30 @@ export class ProductsListComponent implements OnInit {
         type: [null],
         available: [null],
         backlog: [null],
+        customProperties: this.formBuilder.group({})
       })
-    })
+    });
   }
 
-  fetchProductsFromStorage(): void {
-    const productsJson = localStorage.getItem('@products');
-    if (productsJson) {
-      this.products = JSON.parse(productsJson);
-    } else {
-      this.fetchProducts();
-    }
+  private getChangedProperties(): { [key: string]: any } {
+    const changedProperties: { [key: string]: any } = {};
+
+    Object.keys(this.productForm.controls).forEach((name) => {
+      const currentControl = this.productForm.get(name);
+
+      if (currentControl?.dirty) {
+        changedProperties[name] = currentControl.value;
+      }
+    });
+
+    return changedProperties;
   }
 
   fetchProducts(): void {
     this.productsService.getProducts().subscribe({
-      next: (res) => this.products = res,
+      next: (res) => {
+        this.products = res;
+      },
       error: () => {
         const options: SweetAlertOptions = {
           html: `
@@ -80,16 +98,89 @@ export class ProductsListComponent implements OnInit {
         Swal.fire(options);
       }
     })
+      .add(() => this.changeDetector.detectChanges())
   }
 
   showProductDetails(row: ProductsModel): void {
-    this.createProduct = false;
+    this.isUpdating = true;
+    this.productForm.controls['sku'].disable();
     this.selectedProduct = row;
+    this.populateProductForm(row);
     this.changeDetector.detectChanges();
   }
 
-  editProduct(product: ProductsModel): void {
+  populateProductForm(product: ProductsModel): void {
+    this.productForm.patchValue({
+      name: product.name,
+      description: product.description,
+      sku: product.sku,
+      cost: product.cost,
+      profile: product.profile
+    });
+  }
 
+  customPropertiesKeys(): string[] {
+    const customPropertiesGroup = this.productForm.get('profile.customProperties') as FormGroup;
+    return Object.keys(customPropertiesGroup.controls);
+  }
+
+  createProduct(): void {
+    this.isLoading = true;
+    this.productsService.createProduct(this.productForm.value).subscribe({
+      next: () => {
+        const options: SweetAlertOptions = {
+          html: `
+            <span style="display: flex; height: 60px; align-items: center; justify-content: center;">
+              <p class="swal-expirated-token" style="font-weight: bold;">
+                ${`Product ${this.productForm.value.name} successfully created!`}
+              </p>
+            </span>
+          `,
+          toast: false,
+          position: 'center',
+          showConfirmButton: true,
+          timerProgressBar: true,
+        };
+
+        Swal.fire(options);
+      },
+      error: () => this.displayErrorOnRequest(),
+    })
+      .add(() => {
+        this.isLoading = false;
+        this.fetchProducts();
+        this.changeDetector.detectChanges();
+      })
+  }
+
+  updateProduct(): void {
+    console.log('getChangedProperties', this.getChangedProperties())
+    this.isLoading = true;
+    this.productsService.updateProduct(this.selectedProduct!.id, this.productForm.value).subscribe({
+      next: () => {
+        const options: SweetAlertOptions = {
+          html: `
+            <span style="display: flex; height: 60px; align-items: center; justify-content: center;">
+              <p class="swal-expirated-token" style="font-weight: bold;">
+                ${`Product ${this.selectedProduct?.name} successfully updated!`}
+              </p>
+            </span>
+          `,
+          toast: false,
+          position: 'center',
+          showConfirmButton: true,
+          timerProgressBar: true,
+        };
+
+        Swal.fire(options);
+      },
+      error: () => this.displayErrorOnRequest(),
+    })
+      .add(() => {
+        this.isLoading = false;
+        this.fetchProducts();
+        this.changeDetector.detectChanges();
+      })
   }
 
   openDeletionDialog(product: ProductsModel): void {
@@ -108,13 +199,13 @@ export class ProductsListComponent implements OnInit {
   }
 
   deleteProduct(): void {
-    this.productsService.deleteProduct(this.selectedProduct.id).subscribe({
+    this.productsService.deleteProduct(this.selectedProduct!.id).subscribe({
       next: () => {
         const options: SweetAlertOptions = {
           html: `
             <span style="display: flex; height: 60px; align-items: center; justify-content: center;">
               <p class="swal-expirated-token" style="font-weight: bold;">
-                ${`Product ${this.selectedProduct.name} successfully deleted!`}
+                ${`Product ${this.selectedProduct?.name} successfully deleted!`}
               </p>
             </span>
           `,
@@ -125,7 +216,8 @@ export class ProductsListComponent implements OnInit {
         };
 
         Swal.fire(options);
-      }
+      },
+      error: () => this.displayErrorOnRequest(),
     })
       .add(() => {
         this.fetchProducts();
@@ -133,8 +225,35 @@ export class ProductsListComponent implements OnInit {
       })
   }
 
+  saveChanges(): void {
+    if (this.isUpdating) {
+      this.updateProduct();
+    } else {
+      this.createProduct();
+    }
+  }
+
+  displayErrorOnRequest(): void {
+    const options: SweetAlertOptions = {
+      html: `
+          <span style="display: flex; height: 60px; align-items: center; align-content: center;">
+            <p class="swal-expirated-token">
+              It was not possible to process your request due to an error with the server, please try again later.
+            </p>
+          </span>
+        `,
+      toast: false,
+      position: 'center',
+      showConfirmButton: true,
+      timerProgressBar: true,
+    };
+    Swal.fire(options);
+  }
+
   newProduct(): void {
-    this.createProduct = true;
+    this.isUpdating = false;
+    this.selectedProduct = null;
+    this.productForm.reset();
   }
 
   formatPrice(price: number): string {
@@ -142,5 +261,13 @@ export class ProductsListComponent implements OnInit {
       style: 'currency',
       currency: 'USD',
     }).format(price);
+  }
+
+  updateProductProfile(updatedProfile: Product['profile']) {
+    console.log('updatedProfile', updatedProfile)
+    this.product.profile = updatedProfile;
+    this.productForm.patchValue({
+      profile: updatedProfile,
+    })
   }
 }
