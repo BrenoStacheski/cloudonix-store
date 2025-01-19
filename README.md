@@ -15,7 +15,7 @@
 Before starting you'll need the following tools on your computer:
 
 - **Angular 2+**: Framework for building the application.
-- **Node.js v20+**: JavaScript runtime for running the app's backend.
+- **Node.js v20+**: JavaScript runtime with NPM to manage dependencies.
 - **Yarn v1+**: Package manager for installing dependencies.
 - **Visual Studio Code** or another IDE: Recommended for development.
 
