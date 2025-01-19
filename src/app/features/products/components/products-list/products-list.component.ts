@@ -4,7 +4,7 @@ import { ProductsModel } from '../../../../core/models/products/product-model';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeleteProductComponent } from '../delete-product/delete-product.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../../web-components/product';
 
 @Component({
@@ -49,10 +49,10 @@ export class ProductsListComponent implements OnInit {
 
   initProductForm(): void {
     this.productForm = this.formBuilder.group({
-      name: [null],
-      description: [null],
-      sku: [null],
-      cost: [null],
+      name: [null, Validators.required],
+      description: [null, Validators.required],
+      sku: [null, Validators.required],
+      cost: [null, Validators.required],
       profile: this.formBuilder.group({
         type: [null],
         available: [null],
@@ -84,7 +84,7 @@ export class ProductsListComponent implements OnInit {
       error: () => {
         const options: SweetAlertOptions = {
           html: `
-                <span style="display: flex; height: 60px; align-items: center; align-content: center;">
+                <span>
                   <p class="swal-expirated-token">
                     It was not possible to fetch products due to an error with the server, please try again later.
                   </p>
@@ -130,7 +130,7 @@ export class ProductsListComponent implements OnInit {
       next: () => {
         const options: SweetAlertOptions = {
           html: `
-            <span style="display: flex; height: 60px; align-items: center; justify-content: center;">
+            <span>
               <p class="swal-expirated-token" style="font-weight: bold;">
                 ${`Product ${this.productForm.value.name} successfully created!`}
               </p>
@@ -160,7 +160,7 @@ export class ProductsListComponent implements OnInit {
       next: () => {
         const options: SweetAlertOptions = {
           html: `
-            <span style="display: flex; height: 60px; align-items: center; justify-content: center;">
+            <span>
               <p class="swal-expirated-token" style="font-weight: bold;">
                 ${`Product ${this.selectedProduct?.name} successfully updated!`}
               </p>
@@ -203,7 +203,7 @@ export class ProductsListComponent implements OnInit {
       next: () => {
         const options: SweetAlertOptions = {
           html: `
-            <span style="display: flex; height: 60px; align-items: center; justify-content: center;">
+            <span>
               <p class="swal-expirated-token" style="font-weight: bold;">
                 ${`Product ${this.selectedProduct?.name} successfully deleted!`}
               </p>
@@ -226,6 +226,23 @@ export class ProductsListComponent implements OnInit {
   }
 
   saveChanges(): void {
+    if (this.productForm.invalid) {
+      const options: SweetAlertOptions = {
+        html: `
+                <span>
+                  <p class="swal-expirated-token">
+                    Please, fill required fields.
+                  </p>
+                </span>
+                `,
+        toast: false,
+        position: 'center',
+        showConfirmButton: true,
+        timerProgressBar: true,
+      };
+      Swal.fire(options);
+      return;
+    }
     if (this.isUpdating) {
       this.updateProduct();
     } else {
@@ -236,7 +253,7 @@ export class ProductsListComponent implements OnInit {
   displayErrorOnRequest(): void {
     const options: SweetAlertOptions = {
       html: `
-          <span style="display: flex; height: 60px; align-items: center; align-content: center;">
+          <span>
             <p class="swal-expirated-token">
               It was not possible to process your request due to an error with the server, please try again later.
             </p>
@@ -253,6 +270,7 @@ export class ProductsListComponent implements OnInit {
   newProduct(): void {
     this.isUpdating = false;
     this.selectedProduct = null;
+    this.productForm.controls['sku'].enable();
     this.productForm.reset();
   }
 
@@ -264,10 +282,26 @@ export class ProductsListComponent implements OnInit {
   }
 
   updateProductProfile(updatedProfile: Product['profile']) {
-    console.log('updatedProfile', updatedProfile)
     this.product.profile = updatedProfile;
+
+    const customPropertiesGroup = this.productForm.get('profile.customProperties') as FormGroup;
+
+    Object.keys(customPropertiesGroup.controls).forEach((key) => {
+      customPropertiesGroup.removeControl(key);
+    });
+
+    if (updatedProfile.customProperties) {
+      Object.entries(updatedProfile.customProperties).forEach(([key, value]) => {
+        customPropertiesGroup.addControl(key, this.formBuilder.control(value));
+      });
+    }
+
     this.productForm.patchValue({
-      profile: updatedProfile,
-    })
+      profile: {
+        ...updatedProfile,
+        customProperties: undefined
+      }
+    });
   }
+
 }
