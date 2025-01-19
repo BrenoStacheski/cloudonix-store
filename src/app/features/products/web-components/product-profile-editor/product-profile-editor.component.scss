@@ -1,0 +1,39 @@
+.product-profile-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+
+    .form-group {
+      flex: 1;
+    }
+  }
+
+  .form-row-checkbox {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.form-control {
+  margin-right: 8px;
+}
+
+.key-value-control {
+  width: 43%;
+}
+
+.table-bordered {
+  width: 100%;
+}
+
+.add-btn {
+  width: 10%;
+}
+
+.remove-btn {
+  width: 50%;
+}
