@@ -5,15 +5,13 @@
 
 .delete-dialog-title {
   font-size: 1.5rem;
-  font-weight: bold;
   text-align: center;
-  color: #333;
   margin-bottom: 1.5rem;
 }
 
 .product-name {
-  color: #d9534f;
   font-weight: bold;
+  text-decoration: underline;
 }
 
 .delete-dialog-actions {
@@ -44,11 +42,6 @@
 
 .cancel-btn:hover {
   background-color: #e2e2e2;
-}
-
-.submit-btn {
-  background-color: #d9534f;
-  color: #fff;
 }
 
 .submit-btn:hover {
