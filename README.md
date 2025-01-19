@@ -1,27 +1,33 @@
-# CloudonixStore
+<h1 align="center">Cloudonix Store</h1>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
+<p align="center">Cloudonix Store is an application designed to provide a seamless user experience for listing, creating, editing, and deleting products.</p>
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- [x] User login with token and input validation
+- [x] Product registration
+- [x] Product listing
+- [x] Product update
+- [x] Product exclusion
 
-## Code scaffolding
+## Prerequisites
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Before starting you'll need the following tools on your computer:
+- Angular 2+
+- Node v20+
+- Yarn v1+
+- Visual Studio Code or an IDE
 
-## Build
+## How to run the app
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- After cloning the project into your machine you'll need to run the following command on your terminal (make sure to run on Command Prompt instead of Powershell otherwise it will throw an error):
 
-## Running unit tests
+yarn
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+this command will download all project dependencies and different from NPM it will resolve all dependency conflict.
 
-## Running end-to-end tests
+- Following the dependencies download you will then run the command to build the server and host the application on your browser:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+yarn start
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Autor: [Breno Stacheski](https://github.com/BrenoStacheski)
