@@ -71,7 +71,7 @@
       <form class="mt-3" [formGroup]="productForm">
         <div class="row mb-2">
           <div class="col-md-6">
-            <label class="form-label">Product name:</label>
+            <label class="form-label">Product name:<span class="text-danger"> *</span></label>
             <input type="text" formControlName="name" class="form-control w-100" placeholder="Enter product name" />
           </div>
 
@@ -82,7 +82,7 @@
           </div>
 
           <div class="col-md-3">
-            <label class="form-label">Price:</label>
+            <label class="form-label">Price:<span class="text-danger"> *</span></label>
             <input type="text" formControlName="cost" class="form-control w-100" placeholder="Enter product price"
               currencyMask [options]="dollarCurrencyFormat" />
           </div>
@@ -90,7 +90,7 @@
 
         <div class="row mb-2">
           <div class="col-md-12">
-            <label class="form-label">Description:</label>
+            <label class="form-label">Description:<span class="text-danger"> *</span></label>
             <textarea type="text" formControlName="description" class="form-control w-100"
               placeholder="Enter product description">
                   </textarea>
@@ -116,7 +116,7 @@
       </form>
 
       <div class="d-flex justify-content-end align-items-center mt-3">
-        <button [disabled]="isLoading" class="btn btn-primary btn-sm" (click)="saveChanges()">
+        <button [disabled]="isLoading || productForm.invalid" class="btn btn-primary btn-sm" (click)="saveChanges()">
           <i class="bi bi-check">
             Save changes
           </i>
