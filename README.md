@@ -30,14 +30,18 @@ Before starting you'll need the following tools on your computer:
 2. **Install dependencies**
 - After cloning the project into your machine you'll need to run the following command on your terminal (make sure to run on Command Prompt instead of Powershell otherwise it will throw an error):
 
-yarn
+   ```bash
+  yarn
+  ```
 
 this command will download all project dependencies and different from NPM it will resolve all dependency conflict.
 
 3. **Start the application**
 - Following the dependencies download you will then run the command to build the server and host the application on your browser:
 
-yarn start
+   ```bash
+  yarn start
+  ```
 
 Let me know if you’d like to add more sections, such as "Contributing" or "License"!
 
